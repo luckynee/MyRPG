@@ -28,9 +28,10 @@ public class PlayerAnimation : MonoBehaviour
         if(playerStateManager.IsIdle())
         {
             animator.SetBool(ISIDLE, true);
+            animator.SetBool(ISWALKING, false);
         } else if (playerStateManager.IsWalking()) 
         {
-            animator.SetTrigger(ISWALKING);
+            animator.SetBool(ISWALKING,true);
             animator.SetBool(ISIDLE,false);
         }
 
