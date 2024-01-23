@@ -29,6 +29,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashCooldown;
 
 
+    #region Setter Getter
+    public bool IsGrounded { get { return isGrounded; } }
+    #endregion
+
     private float horizontalInput;
     private float verticalInput;
 
@@ -74,14 +78,6 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = gameInput.GetHorizontalNormalized();
         verticalInput = gameInput.GetVerticalNormalized();
 
-
-        GroundCheck();
-        SpeedControl();
-
-    }
-
-    private void FixedUpdate()
-    {
         if (CheckIfWalking())
         {
             OnWalking?.Invoke(this, EventArgs.Empty);
@@ -91,6 +87,15 @@ public class PlayerMovement : MonoBehaviour
         {
             OnIdle?.Invoke(this, EventArgs.Empty);
         }
+
+        GroundCheck();
+        SpeedControl();
+
+    }
+
+    private void FixedUpdate()
+    {
+       
 
         MovePlayer();
     }
