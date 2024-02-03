@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public event EventHandler OnWalking;
     public event EventHandler OnIdle;
     public event EventHandler OnAir;
+    public event EventHandler OnSprinting;
+    public event EventHandler OnJumping;
 
     [Header("Refrences")]
     [SerializeField] private GameInput gameInput;
@@ -16,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Attributes")]
     [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float sprintSpeed = 12f;
     [SerializeField] private float playerHeight;
     [SerializeField] private float groundDrag;
 
@@ -28,13 +32,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashForce;
     [SerializeField] private float dashCooldown;
 
-
     #region Setter Getter
-    public bool IsGrounded { get { return isGrounded; } }
+
+    public float InputMagnitude { get {return inputMagnitude; } }
+
     #endregion
+
 
     private float horizontalInput;
     private float verticalInput;
+    private float inputMagnitude;
 
     private bool isGrounded;
     private bool canJump = true;
@@ -70,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
         Jump();
 
         Invoke(nameof(ResetJump), jumpCooldown);
+
     }
 
     // Update is called once per frame
@@ -78,26 +86,18 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = gameInput.GetHorizontalNormalized();
         verticalInput = gameInput.GetVerticalNormalized();
 
-        if (CheckIfWalking())
-        {
-            OnWalking?.Invoke(this, EventArgs.Empty);
-        }
-
         if (CheckIfIdle())
         {
             OnIdle?.Invoke(this, EventArgs.Empty);
         }
-
-        GroundCheck();
-        SpeedControl();
-
     }
 
     private void FixedUpdate()
     {
-       
+        MovePlayer(); // move player
+        GroundCheck(); // Check if player touch the ground
+        SpeedControl(); // Control player speed
 
-        MovePlayer();
     }
 
     private void MovePlayer()
@@ -109,6 +109,19 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
 
+            inputMagnitude = Mathf.Clamp01(moveDir.magnitude /2);
+
+            OnWalking?.Invoke(this, EventArgs.Empty);
+
+            if (gameInput.GetSprintPressed())
+            {
+                rb.AddForce(moveDir.normalized * sprintSpeed * 10f, ForceMode.Force);
+
+                inputMagnitude *= 2;
+
+                OnSprinting?.Invoke(this, EventArgs.Empty);
+            }
+
         }
         else if (!isGrounded)
         {
@@ -117,15 +130,28 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void OnDrawGizmos()
+    {
+        //DrawGizmos for ground
+        Gizmos.color = isGrounded ? Color.green : Color.red; // if grounded color = green if not color = red
+        Vector3 rayStart = transform.position;
+        Vector3 rayDirection = Vector3.down;
+        float rayLength = playerHeight * 0.5f ;
+
+        Gizmos.DrawRay(rayStart, rayDirection * rayLength);
+        
+
+        //Draw
+    }
+
     private void GroundCheck()
     {
         //check ground with shooting raycast below player
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
+        
         if (isGrounded)
         {
             rb.drag = groundDrag;
-
         }
         else
         {
@@ -151,11 +177,13 @@ public class PlayerMovement : MonoBehaviour
         // Check if player can jump and touching ground 
         if (isGrounded && canJump)
         {
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            OnJumping?.Invoke(this, EventArgs.Empty);
 
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
             canJump = false;
+
         }
     }
 
@@ -195,25 +223,16 @@ public class PlayerMovement : MonoBehaviour
         //Check if therers no movement
         if (rb.velocity == Vector3.zero)
         {
+            inputMagnitude = Mathf.Clamp01(0);
             return true;
         }
         else
         {
             return false;
         }
+
     }
 
-    private bool CheckIfWalking()
-    {
-        //Check if player walking
-        if (rb.velocity.magnitude > 0 && rb.velocity.magnitude <= moveSpeed && isGrounded)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
+   
+   
 }

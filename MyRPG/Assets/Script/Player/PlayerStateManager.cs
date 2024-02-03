@@ -5,17 +5,19 @@ using UnityEngine;
 public class PlayerStateManager : MonoBehaviour
 {
     private PlayerMovement playerMovement;
-
+    
     private enum PlayerState
     {
         Idle,
         Walking,
         Sprinting,
         OnAir,
+        Jump,
         Dash,
     }
 
     private PlayerState playerState;
+    private PlayerState previousState;
 
     private void Awake()
     {
@@ -27,10 +29,23 @@ public class PlayerStateManager : MonoBehaviour
         playerMovement.OnWalking += PlayerMovement_OnWalking;
         playerMovement.OnIdle += PlayerMovement_OnIdle;
         playerMovement.OnAir += PlayerMovement_OnAir;
+        playerMovement.OnSprinting += PlayerMovement_OnSprinting;
+        playerMovement.OnJumping += PlayerMovement_OnJumping;
+    }
+
+    private void PlayerMovement_OnJumping(object sender, System.EventArgs e)
+    {
+        playerState = PlayerState.Jump;
+    }
+
+    private void PlayerMovement_OnSprinting(object sender, System.EventArgs e)
+    {
+        playerState = PlayerState.Sprinting;
     }
 
     private void PlayerMovement_OnAir(object sender, System.EventArgs e)
     {
+        
         playerState = PlayerState.OnAir;
     }
 
@@ -56,6 +71,8 @@ public class PlayerStateManager : MonoBehaviour
                 break;
             case PlayerState.OnAir:
                 break;
+            case PlayerState.Jump:
+                break;
             case PlayerState.Dash:
                 break;
         }
@@ -71,6 +88,16 @@ public class PlayerStateManager : MonoBehaviour
     public bool IsWalking()
     {
         return playerState == PlayerState.Walking;
+    }
+
+    public bool OnAir() 
+    {
+        return playerState == PlayerState.OnAir;
+    }
+
+   public bool IsJumping()
+    {
+        return playerState == PlayerState.Jump;
     }
 
 

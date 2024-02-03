@@ -19,6 +19,7 @@ public class GameInput : MonoBehaviour
 
         playerControlAction.Player.Jump.performed += Jump_performed;
         playerControlAction.Player.Dash.performed += Dash_performed;
+       
     }
 
     private void Dash_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -28,7 +29,15 @@ public class GameInput : MonoBehaviour
 
     private void Jump_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        
         OnJumpPressed?.Invoke(this, EventArgs.Empty);
+    }
+
+    public bool GetSprintPressed() 
+    {
+        bool isSprintPressed = playerControlAction.Player.Sprint.IsPressed();
+
+        return isSprintPressed;
     }
 
     public Vector2 GetVectorNormalized()

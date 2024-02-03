@@ -6,9 +6,11 @@ public class PlayerAnimation : MonoBehaviour
 {
     [Header("Refrences")]
     [SerializeField] private PlayerStateManager playerStateManager;
+    [SerializeField] private PlayerMovement playerMovement;
 
     private const string ISIDLE = "IsIdle";
     private const string ISWALKING = "IsWalking";
+    private const string INPUTMAGNITUDE = "Input Magnitude";
 
 
     private Animator animator;
@@ -25,7 +27,9 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
-        if(playerStateManager.IsIdle())
+        animator.SetFloat(INPUTMAGNITUDE, playerMovement.InputMagnitude, 0.35f, Time.deltaTime);
+
+       /* if(playerStateManager.IsIdle())
         {
             animator.SetBool(ISIDLE, true);
             animator.SetBool(ISWALKING, false);
@@ -34,7 +38,7 @@ public class PlayerAnimation : MonoBehaviour
             animator.SetBool(ISWALKING,true);
             animator.SetBool(ISIDLE,false);
         }
-
+       */
     }
 
 
