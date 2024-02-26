@@ -7,15 +7,18 @@ public class Player : MonoBehaviour
     [Header("Refrences")]
     [SerializeField] private InventorySO inventory;
 
-    // Start is called before the first frame update
-    void Start()
+    public void OnTriggerEnter(Collider other)
     {
-        
+        var item = other.GetComponent<Item>();
+        if (item)
+        {
+            inventory.AddItem(item.item, 1);
+            Destroy(other.gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnApplicationQuit()
     {
-        
+        inventory.inventoryContainer.Clear();
     }
 }

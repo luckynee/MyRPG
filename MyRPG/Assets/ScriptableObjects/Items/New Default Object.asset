@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90b6615f6ad1c2428f57e9f8635883a, type: 3}
   m_Name: New Default Object
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 4961031140882886431, guid: 8efbb3649d7517e4d90bc8fdc7ac9113, type: 3}
   type: 2
   description: Testing Desc
