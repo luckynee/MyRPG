@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ee9c9f2ad51a046810e96973822df6, type: 3}
   m_Name: TestFood
   m_EditorClassIdentifier: 
-  prefab: {fileID: 395617964906595274, guid: 9c841280cc70e3442898829d340e3903, type: 3}
+  Id: 0
+  uiDisplay: {fileID: 1412899196, guid: 2d4f716f50a4d1f49b6742d32eecd18d, type: 3}
   type: 0
   description: Test food
   restoreHealthValue: 5

@@ -194,7 +194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113270704}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.01359786, y: 0.82512313, z: -0.5644395, w: -0.019877966}
+  m_LocalRotation: {x: -0.013597874, y: 0.82512313, z: -0.5644395, w: -0.019877985}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -872,7 +872,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604826778}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.012311823, y: 0.8592093, z: -0.5110572, w: -0.020699121}
+  m_LocalRotation: {x: -0.012311823, y: 0.8592093, z: -0.5110572, w: -0.02069912}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1154,8 +1154,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916874160}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.013597881, y: 0.8251231, z: -0.56443954, w: -0.019877993}
-  m_LocalPosition: {x: -0.8578766, y: 6.5, z: -16.54203}
+  m_LocalRotation: {x: -0.013597892, y: 0.8251231, z: -0.56443954, w: -0.01987801}
+  m_LocalPosition: {x: -0.85787654, y: 6.5, z: -16.54203}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2038,15 +2038,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 805df6476fb18824b9bfdc061d3d7252, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2076,8 +2076,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 3a5d47d897f166e4f8b86fceb24f0f6e, type: 2}
-  X_START: -210
-  Y_START: 300
+  inventoryPrefab: {fileID: 2548320410219761871, guid: b7cd1f8845dc19a49bdee4b13b5e6599,
+    type: 3}
+  X_START: -175
+  Y_START: 255
   X_SPACE_BETWEEN_ITEM: 150
   NUMBER_OF_COLUMN: 6
   Y_SPACE_BETWEEN_ITEM: 35
@@ -2274,7 +2276,7 @@ Transform:
   m_GameObject: {fileID: 1980454666}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8578766, y: 6.5, z: -16.54203}
+  m_LocalPosition: {x: -0.85787654, y: 6.5, z: -16.54203}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2422,7 +2424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126307888}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.012958753, y: 0.84265774, z: -0.53791076, w: -0.020300385}
+  m_LocalRotation: {x: -0.012958761, y: 0.84265774, z: -0.53791076, w: -0.020300396}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
