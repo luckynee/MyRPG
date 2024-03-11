@@ -17,21 +17,36 @@ public class InventorySO : ScriptableObject
 
     public void AddItem(Item _item, int _amountItem)
     {
-        if(_item.buff.Length > 0)
+        if (_item.buff.Length > 0)
         {
-            inventoryContainer.itemList.Add(new InventorySlot(_item.Id, _item, _amountItem));
+            SetEmptySlot(_item, _amountItem);
             return;
         }
 
-        for (int i = 0; i < inventoryContainer.itemList.Count; i++)  //Check item in inventory
+        for (int i = 0; i < inventoryContainer.itemList.Length; i++)  //Check item in inventory
         {
-            if (inventoryContainer.itemList[i].item.Id == _item.Id) 
+            if (inventoryContainer.itemList[i].ID == _item.Id)
             {
                 inventoryContainer.itemList[i].AddAmount(_amountItem);
                 return;
             }
         }
-        inventoryContainer.itemList.Add(new InventorySlot(_item.Id,_item,_amountItem));
+        SetEmptySlot(_item, _amountItem);
+
+    }
+
+    public InventorySlot SetEmptySlot(Item _item, int _amount)
+    {
+        for (int i = 0; i < inventoryContainer.itemList.Length; i++)
+        {
+            if (inventoryContainer.itemList[i].ID <= -1)
+            {
+                inventoryContainer.itemList[i].UpdateSlot(_item.Id, _item, _amount);
+                return inventoryContainer.itemList[i];
+            }
+        }
+        //set up function for full inventory
+        return null; 
     }
 
     [ContextMenu("Save")]
@@ -85,16 +100,29 @@ public class InventorySO : ScriptableObject
 [System.Serializable]
 public class Inventory
 {
-    public List<InventorySlot> itemList = new List<InventorySlot>();
+    public InventorySlot[] itemList = new InventorySlot[24];
 }
 
 [System.Serializable]
 public class InventorySlot 
 {
-    public int ID;
+    public int ID = -1;
     public Item item;
     public int amountItem;
+    public InventorySlot()
+    {
+        ID = -1;
+        item = null;
+        amountItem = 0;
+    } 
     public InventorySlot(int _id,Item _item, int _amountItem)
+    {
+        ID = _id;
+        item = _item;
+        amountItem = _amountItem;
+    }
+
+    public void UpdateSlot(int _id, Item _item, int _amountItem)
     {
         ID = _id;
         item = _item;
