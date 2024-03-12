@@ -49,6 +49,24 @@ public class InventorySO : ScriptableObject
         return null; 
     }
 
+    public void MoveItem(InventorySlot item1, InventorySlot item2)
+    {
+        InventorySlot temp = new InventorySlot(item2.ID, item2.item, item2.amountItem);
+        item2.UpdateSlot(item1.ID, item1.item, item1.amountItem);
+        item1.UpdateSlot(temp.ID, temp.item, temp.amountItem);
+    }
+
+    public void RemoveItem(Item _item)
+    {
+        for (int i = 0; i < inventoryContainer.itemList.Length; i++)
+        {
+            if (inventoryContainer.itemList[i].item == _item)
+            {
+                inventoryContainer.itemList[i].UpdateSlot(-1, null, 0);
+            }
+        }
+    }
+
     [ContextMenu("Save")]
     public void Save()
     {
@@ -83,7 +101,11 @@ public class InventorySO : ScriptableObject
 
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-            inventoryContainer = (Inventory)formatter.Deserialize(stream);
+            Inventory newContainer= (Inventory)formatter.Deserialize(stream);
+            for (int i = 0; i < inventoryContainer.itemList.Length; i++)
+            {
+                inventoryContainer.itemList[i].UpdateSlot(newContainer.itemList[i].ID, newContainer.itemList[i].item, newContainer.itemList[i].amountItem);
+            }
             stream.Close();
 
 

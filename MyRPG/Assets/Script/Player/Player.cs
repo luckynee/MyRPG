@@ -9,15 +9,15 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            inventory.Save();
-        }
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    inventory.Save();
+        //}
 
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            inventory.Load();
-        }
+        //if (Input.GetKeyUp(KeyCode.Escape))
+        //{
+        //    inventory.Load();
+        //}
     }
 
     public void OnTriggerEnter(Collider other)
